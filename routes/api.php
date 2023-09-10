@@ -25,16 +25,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });*/
 
-Route::post('/register', [UserController::class, 'store']);
-Route::post('/login',[AuthController::class, 'login']);
+//Route::post('/register', [UserController::class, 'store']);
 
+Route::post('/login',[AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function(){
 Route::apiResources([
-    'user' => UserController::class,
-    'produto' => ProdutoController::class,
-    'fornecedor' => FornecerController::class,
-    'pedido_compra' => PedidoCompraController::class,
-    'itens_pedido_compra' => ItensPedidoCompraController::class 
+    'users' => UserController::class,
+    'produtos' => ProdutoController::class,
+    'fornecedors' => FornecerController::class,
+    'pedido_compras' => PedidoCompraController::class,
+    'itens_pedido_compras' => ItensPedidoCompraController::class 
 ]);
 Route::get('/movimentos',[MovimentosController::class, 'getAll']);
 });

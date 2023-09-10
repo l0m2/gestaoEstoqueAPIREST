@@ -41,19 +41,19 @@ class UserController extends Controller
 
             if($validator->fails()){
                 return response()->json([
-                    'messagem' => 'Erro na validacao dos dados'
-                ], 401);
+                    'message' => 'Erro na validacao dos dados'
+                ], 400);
             }
 
         else{
             if(User::create($request->all())){
                 return response()->json([
-                'messagem' => 'Usuario registado com sucesso'
+                'message' => 'Usuario registado com sucesso'
                 ],201);
             }
 
             return response()->json([
-              'messagem' => 'Erro no registro do usuario'
+              'message' => 'Erro no registro do usuario'
             ],400);
         }
     }
