@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\produto;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 class ProdutoController extends Controller
 {
     /**

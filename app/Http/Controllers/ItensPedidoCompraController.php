@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\itensPedidoCompra;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 class ItensPedidoCompraController extends Controller
 {
     /**

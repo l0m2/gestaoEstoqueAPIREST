@@ -8,6 +8,7 @@ use App\Http\Controllers\FornecerController;
 use App\Http\Controllers\ItensPedidoCompraController;
 use App\Http\Controllers\PedidoCompraController;
 use App\Http\Controllers\ProdutoController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,11 +25,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });*/
 
-Route::post('/register', [AuthController::class, 'register']);
+Route::post('/register', [UserController::class, 'store']);
 Route::post('/login',[AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function(){
 Route::apiResources([
+    'user' => UserController::class,
     'produto' => ProdutoController::class,
     'fornecedor' => FornecerController::class,
     'pedido_compra' => PedidoCompraController::class,

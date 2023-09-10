@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\fornecer;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 class FornecerController extends Controller
 {
     /**
