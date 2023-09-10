@@ -36,6 +36,7 @@ Route::apiResources([
     'pedido_compras' => PedidoCompraController::class,
     'itens_pedido_compras' => ItensPedidoCompraController::class 
 ]);
+Route::post('/logout',[AuthController::class, 'logout']);
 Route::get('/movimentos',[MovimentosController::class, 'getAll']);
 });
 
