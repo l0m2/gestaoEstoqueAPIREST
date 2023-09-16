@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\produto;
+use Illuminate\Http\Client\ResponseSequence;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 class ProdutoController extends Controller
@@ -11,8 +12,16 @@ class ProdutoController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-       
+    { 
+        $produtos = produto::count();
+
+        if($produtos==0){      
+            return response()->json([
+            'message' => 'Nao tem nenhum produto disponivel'
+        ], 204);
+        }
+
+        return produto::all();
     }
 
     /**
@@ -59,9 +68,16 @@ class ProdutoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(produto $produto)
+    public function show($id)
     {
-        //
+        $produto = produto::find($id);
+        if(!$produto){
+            return response()->json([
+             'message' => 'Produto nao encontrado'
+            ],404);
+        }
+        
+        return $produto;
     }
 
     /**
