@@ -121,8 +121,24 @@ class ProdutoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(produto $produto)
+    public function destroy($id)
     {
-        //
+        $produto = produto::find($id);
+        if(!$produto){
+            return response()->json([
+             'message' => 'Produto nao encontrado'
+            ],404);
+        }
+
+        if($produto->delete()){
+            return response()->json([
+                'message' => 'Produto Apagado'
+            ], 200);
+        }
+        
+        return response()->json([
+            'message' => 'Nao foi possivel apagar o produto' 
+        ],400);
+        
     }
 }
