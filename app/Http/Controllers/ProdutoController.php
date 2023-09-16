@@ -12,7 +12,7 @@ class ProdutoController extends Controller
      */
     public function index()
     {
-        //
+       
     }
 
     /**
@@ -28,7 +28,32 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make(
+            $request->all(),[
+                'nome' => 'required|string|max:255',
+                'descrição' => 'required|string',
+                'preço' => 'required|numeric|min:0',
+                'quantidade' => 'required|integer|min:0',
+            ]
+            );
+
+            if($validator->fails()){
+                return response()->json([
+                    'message' => 'Erro na validacao dos dados'
+                ], 400);
+            }
+
+        else{
+            if(produto::create($request->all())){
+                return response()->json([
+                'message' => 'Produto registado com sucesso'
+                ],201);
+            }
+
+            return response()->json([
+              'message' => 'Erro no registro do Produto'
+            ],400);
+        }
     }
 
     /**
