@@ -51,7 +51,7 @@ class PedidoCompraController extends Controller
             'message' => 'Fornecedor nao existe'
         ],404);
       }   
-          
+
        else{
          if(pedidoCompra::create($request->all())){
             return response()->json([
@@ -67,9 +67,16 @@ class PedidoCompraController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(pedidoCompra $pedidoCompra)
+    public function show($id)
     {
-        //
+        $pedidoCompra = pedidoCompra::find($id);
+        if(!$pedidoCompra){
+            return response()->json([
+             'message'=> 'Pedido de Compra nao existe'
+            ],404);
+        }
+
+        return $pedidoCompra;
     }
 
     /**
