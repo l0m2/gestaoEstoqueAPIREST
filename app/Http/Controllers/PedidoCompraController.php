@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use App\Models\pedidoCompra;
 use Illuminate\Http\Request;
+use App\Models\fornecer;
 
 class PedidoCompraController extends Controller
 {
@@ -34,7 +35,33 @@ class PedidoCompraController extends Controller
      */
     public function store(Request $request)
     {
-
+        $validator = Validator::make(
+            $request->all(),[
+                'fornecedor_id' => 'required|integer|min:0',
+                'status'=> 'required|string|max:15',
+            ]);
+        
+        if($validator->fails()){
+            return response()->json([
+                'message'=> 'Erro na validacao dos dados'
+            ],400);
+        }
+      else if(!fornecer::find($request['fornecedor_id'])){
+        return response()->json([
+            'message' => 'Fornecedor nao existe'
+        ],404);
+      }   
+          
+       else{
+         if(pedidoCompra::create($request->all())){
+            return response()->json([
+                'message' => 'Pedido de Compra registado com sucesso'
+            ],201);
+         }
+         return response()->json([
+            'message' => 'Erro no registo do Pedido de Compra'
+         ],400);
+        }
     }
 
     /**
