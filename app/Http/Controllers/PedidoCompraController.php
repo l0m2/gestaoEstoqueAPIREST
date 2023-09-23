@@ -46,11 +46,12 @@ class PedidoCompraController extends Controller
                 'message'=> 'Erro na validacao dos dados'
             ],400);
         }
+        
       else if(!fornecer::find($request['fornecedor_id'])){
         return response()->json([
             'message' => 'Fornecedor nao existe'
         ],404);
-      }   
+      }  
 
        else{
          if(pedidoCompra::create($request->all())){
@@ -119,7 +120,7 @@ class PedidoCompraController extends Controller
 
 
           $validated = $validator->validated();
-          
+
          if($validated['status'] == 'concluido'){
             return response()->json([
     'message'=> 'Nao e possivel concluir um pedido sem que nenhum produto seja comprado'
@@ -146,8 +147,23 @@ class PedidoCompraController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(pedidoCompra $pedidoCompra)
+    public function destroy($id)
     {
-        //
+        $pedidoCompra = pedidoCompra::find($id);
+        if(!$pedidoCompra){
+            return response()->json([
+             'message'=> 'Pedido de Compra nao existe'
+            ],404);
+        }
+
+        if($pedidoCompra->delete()){
+            return response()->json([
+                'message' => 'Pedido de Compra apagado'
+            ], 200);
+        }
+        
+        return response()->json([
+            'messagem' => 'nao foi possivel apagar o pedido de compra'
+        ],400);
     }
 }
