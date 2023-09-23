@@ -74,9 +74,16 @@ class FornecerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(fornecer $fornecer)
+    public function edit($id)
     {
-        //
+        $fornecer = fornecer::find($id);
+        if(!$fornecer){
+            return response()->json([
+          'message' => 'Fornecedor nao encontrado'
+            ], 404);
+        }
+
+        return $fornecer;
     }
 
     /**
