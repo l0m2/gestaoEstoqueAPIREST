@@ -71,7 +71,7 @@ class FornecerController extends Controller
         $fornecer = fornecer::find($id);
         if(!$fornecer){
             return response()->json([
-          'message' => 'Fornecedor nao encontrado'
+          'message' => 'Fornecedor nao existe'
             ], 404);
         }
 
@@ -93,7 +93,7 @@ class FornecerController extends Controller
         $fornecer = fornecer::find($id);
         if(!$fornecer){
             return response()->json([
-          'message' => 'Fornecedor nao encontrado'
+          'message' => 'Fornecedor nao existe'
             ], 404);
         }
 
@@ -139,7 +139,7 @@ class FornecerController extends Controller
       $fornecer = fornecer::find($id);
       if(!$fornecer){
         return response()->json([
-         'message' => 'Fornecedor nao encontrado'
+         'message' => 'Fornecedor nao existe'
         ],404);
       } 
 

@@ -38,6 +38,7 @@ Route::apiResources([
 ]);
 Route::post('/logout',[AuthController::class, 'logout']);
 Route::get('/movimentos',[MovimentosController::class, 'getAll']);
+Route::get('/movimentos/{id}',[MovimentosController::class, 'getOne']);
 });
 
 

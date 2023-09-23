@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\produto;
 use Illuminate\Http\Client\ResponseSequence;
 use Illuminate\Http\Request;
+use App\Models\movimentaçãoEstoque;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 class ProdutoController extends Controller
 {
     /**
@@ -53,7 +55,16 @@ class ProdutoController extends Controller
             }
 
         else{
-            if(produto::create($request->all())){
+            $produto = produto::create($request->all());
+            if($produto){
+                $user = Auth::user();
+                movimentaçãoEstoque::create([
+                'user_id'=> $user->id,
+                'produto_id'=> $produto->id,
+                'tipo_movimentacao' => 'Entrada', 
+                'quantidade' => $produto->quantidade 
+                ]);
+
                 return response()->json([
                 'message' => 'Produto registado com sucesso'
                 ],201);
@@ -73,7 +84,7 @@ class ProdutoController extends Controller
         $produto = produto::find($id);
         if(!$produto){
             return response()->json([
-             'message' => 'Produto nao encontrado'
+             'message' => 'Produto nao existe'
             ],404);
         }
         
@@ -96,7 +107,7 @@ class ProdutoController extends Controller
         $produto = produto::find($id);
         if(!$produto){
             return response()->json([
-             'message' => 'Produto nao encontrado'
+             'message' => 'Produto nao existe'
             ],404);
         }
 
@@ -115,7 +126,7 @@ class ProdutoController extends Controller
                 ], 400);
             }
             else{
-                
+
             $validated = $validator->validated();
 
             $update = $produto->update([
@@ -145,7 +156,7 @@ class ProdutoController extends Controller
         $produto = produto::find($id);
         if(!$produto){
             return response()->json([
-             'message' => 'Produto nao encontrado'
+             'message' => 'Produto nao existe'
             ],404);
         }
 
