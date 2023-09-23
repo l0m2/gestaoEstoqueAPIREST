@@ -114,6 +114,8 @@ class ProdutoController extends Controller
                     'message' => 'Erro na validacao dos dados'
                 ], 400);
             }
+            else{
+                
             $validated = $validator->validated();
 
             $update = $produto->update([
@@ -133,6 +135,7 @@ class ProdutoController extends Controller
                 'message' => 'Erro na atualizacao do Produto'
               ],400);
         }
+    }
 
     /**
      * Remove the specified resource from storage.

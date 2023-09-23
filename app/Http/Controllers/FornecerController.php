@@ -66,16 +66,8 @@ class FornecerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(fornecer $fornecer)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
-    {
+    public function show($id)
+    {     
         $fornecer = fornecer::find($id);
         if(!$fornecer){
             return response()->json([
@@ -87,11 +79,56 @@ class FornecerController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(fornecer $fornecer)
+    {
+    }
+
+    /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, fornecer $fornecer)
+    public function update(Request $request, $id)
     {
-        //
+        $fornecer = fornecer::find($id);
+        if(!$fornecer){
+            return response()->json([
+          'message' => 'Fornecedor nao encontrado'
+            ], 404);
+        }
+
+        $validator = Validator::make(
+            $request->all(),[
+                'firstname' => 'required|string|max:255',
+                'lastname' => 'required|string|max:255',
+                'contacto' => 'required|string|max:13',
+                'endereco' => 'required|string|min:6', 
+            ]);
+
+            if($validator->fails()){
+                return response()->json([
+                    'message' => 'Erro na validacao dos dados'
+                ], 400);
+            }
+            else{
+                $validated = $validator->validated();
+                
+                $update = $fornecer->update([
+                 'firstname' => $validated['firstname'],
+                 'lastname' => $validated['lastname'],
+                 'contacto' => $validated['contacto'],
+                 'endereco' => $validated['endereco']
+                ]);
+
+            if($update){
+               return response()->json([
+                'message' => 'Dados do Fornecedor Atualizados'
+               ], 200);
+            }
+            return response()->json([
+                'message'=> 'Erro na atualizacao do Fornecedor'
+            ],400);
+        }
     }
 
     /**
