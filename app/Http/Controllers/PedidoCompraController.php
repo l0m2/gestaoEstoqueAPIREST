@@ -12,7 +12,13 @@ class PedidoCompraController extends Controller
      */
     public function index()
     {
-        //
+        $pedidoCompra = pedidoCompra::count();
+        if($pedidoCompra == 0){
+            return response()->json([
+                'message' => 'Nao tem nenhum pedido de Compra'
+            ],204);
+        }
+        return pedidoCompra::all();
     }
 
     /**
