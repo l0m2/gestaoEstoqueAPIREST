@@ -134,8 +134,22 @@ class FornecerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(fornecer $fornecer)
+    public function destroy($id)
     {
-        //
+      $fornecer = fornecer::find($id);
+      if(!$fornecer){
+        return response()->json([
+         'message' => 'Fornecedor nao encontrado'
+        ],404);
+      } 
+
+      if($fornecer->delete()){
+        return response()->json([
+            'message' => 'fornecedor apagado'
+        ], 200);
+      }
+      return response()->json([
+       'message' => 'Nao foi possivel apagar o Fornecedor'
+      ],400);
     }
 }
