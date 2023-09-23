@@ -12,7 +12,15 @@ class FornecerController extends Controller
      */
     public function index()
     {
-        //
+        $fornecers = fornecer::count();
+
+        if($fornecers==0){
+            return response()->json([
+                'message' => 'Nao tem nenhum fornecedor registado'
+            ], 204);
+        }
+
+        return fornecer::all();
     }
 
     /**
