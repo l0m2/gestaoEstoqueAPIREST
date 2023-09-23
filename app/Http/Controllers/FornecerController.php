@@ -28,7 +28,31 @@ class FornecerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make(
+            $request->all(),[
+                'firstname' => 'required|string|max:255',
+                'lastname' => 'required|string|max:255',
+                'contacto' => 'required|string|max:13',
+                'endereco' => 'required|string|min:6', 
+            ]);
+
+            if($validator->fails()){
+                return response()->json([
+                    'message' => 'Erro na validacao dos dados'
+                ], 400);
+            }
+
+            else{
+                if(fornecer::create($request->all())){
+                    return response()->json([
+                        'message'=> 'Fornecedor Registado com Sucesso'
+                    ],201); 
+                }
+
+                return response()->json([
+                'message'=> 'Erro no Registo'
+                ], 400);
+            }
     }
 
     /**

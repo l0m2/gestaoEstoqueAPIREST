@@ -28,7 +28,7 @@ class PedidoCompraController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**

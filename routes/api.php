@@ -32,7 +32,7 @@ Route::middleware('auth:sanctum')->group(function(){
 Route::apiResources([
     'users' => UserController::class,
     'produtos' => ProdutoController::class,
-    'fornecedors' => FornecerController::class,
+    'fornecedores' => FornecerController::class,
     'pedido_compras' => PedidoCompraController::class,
     'itens_pedido_compras' => ItensPedidoCompraController::class 
 ]);
